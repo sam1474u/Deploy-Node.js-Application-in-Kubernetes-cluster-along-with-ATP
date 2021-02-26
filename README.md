@@ -1,5 +1,5 @@
 A simple backend node.js application on Oracle Container Engine for Kubernetes(OKE) which connects to OCI Autonomous transaction processing(ATP) instance created via OCI service broker
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 In this tutorial we will create a simple backend node.js application on Oracle Container Engine for Kubernetes(OKE) which connects to OCI Autonomous transaction processing(ATP) instance created via OCI service broker.
 We will use oracledb node.js package and oracle instant client for connecting to ATP. We will also create a docker container for DB app built using node.js and store the container image on Oracle Container Registry(OCIR). And finally, expose the deployment (by creating a load balancer service) and test the functionality.
@@ -19,7 +19,8 @@ We will use oracledb node.js package and oracle instant client for connecting to
  
 2. Architecture
 
-// add image here
+     ![image](https://user-images.githubusercontent.com/42166489/109262025-d99d7f00-7826-11eb-9acd-3fa2e5b787f9.png)
+
 
 3. Create OKE cluster
 
@@ -40,6 +41,9 @@ We will use oracledb node.js package and oracle instant client for connecting to
             
     3. OCI credentials
 
+        To generate secret, you can run this as a .sh file. Collect all the deails, if passphrase is not given during key generation, keep as blank. 
+        The private key is your .pem file which you generate. 
+
                   kubectl create secret generic ocicredentials \
                    --from-literal=tenancy=<CUSTOMER_TENANCY_OCID> \
                    --from-literal=user=<USER_OCID> \
@@ -56,6 +60,8 @@ We will use oracledb node.js package and oracle instant client for connecting to
               --set ociCredentials.secretName=ocicredentials \
               --set storage.etcd.useEmbedded=true \
               --set tls.enabled=false
+              
+          // insert image here.
             
     5. RBAC Permissions for registering OCI Service Broker
 
@@ -70,17 +76,19 @@ We will use oracledb node.js package and oracle instant client for connecting to
             
          Get the status of the broker:
          
-         ./svcat get brokers
+                ./svcat get brokers
          
-         // insert image here
+         ![image](https://user-images.githubusercontent.com/42166489/109262109-f6d24d80-7826-11eb-9f27-319fcd17701f.png)
          
          Get Services List
          
-          svcat get classes
+                svcat get classes
+                
+          ![image](https://user-images.githubusercontent.com/42166489/109262149-0356a600-7827-11eb-85e8-e7b7221c26b9.png)
           
          Get Service Plans
          
-         // 
+          ![image](https://user-images.githubusercontent.com/42166489/109262153-05b90000-7827-11eb-9c6d-99895189b0f7.png)
          
          verify the service broker status is ready
          
@@ -94,7 +102,8 @@ We will use oracledb node.js package and oracle instant client for connecting to
               Create ATP serviceinstance
               Create ATP servicebinding
               
-              
+        ![image](https://user-images.githubusercontent.com/42166489/109262203-21240b00-7827-11eb-82f6-f95f2d06d3b0.png)
+       
       Create a file named atp-secret.yaml with the following details: 
       
           Please note : the ATP DB password and wallet password are encoded. you can use any online encoder or can use command. The both password can be same also for ease.
@@ -163,7 +172,7 @@ We will use oracledb node.js package and oracle instant client for connecting to
       
                   kubectl get serviceinstance
                   
-       // insert image here
+       ![image](https://user-images.githubusercontent.com/42166489/109262219-2a14dc80-7827-11eb-8ade-5f86ae07af8c.png)
       
       atp-demo-binding secret automatically gets created which has the wallet details (tnsnames.ora, cwallet.sso etc.) of ATP database we created. 
       we are now ready to use it in our application.
@@ -311,6 +320,9 @@ We will use oracledb node.js package and oracle instant client for connecting to
                $ docker push syd.ocir.io/your_tenancy_namespace/db-app:latest
        
        
+       ![image](https://user-images.githubusercontent.com/42166489/109262312-54ff3080-7827-11eb-8175-b106b13cb791.png)
+
+       ![image](https://user-images.githubusercontent.com/42166489/109262325-5af51180-7827-11eb-94bc-159f8e0154b9.png)
        
        Moving on, The DB POD we create next would also need access to schema user and password created in the previous step. 
        We also specify the service name to connect to (refering to the tnsnames.ora) 
@@ -397,6 +409,8 @@ We will use oracledb node.js package and oracle instant client for connecting to
 8. kubectl apply -f db-app.yaml
 
             kubectl expose deployment db-app --port=80 --target-port=8080 --type=LoadBalancer 
+            
+      ![image](https://user-images.githubusercontent.com/42166489/109262406-7eb85780-7827-11eb-99dc-edc38a625186.png)
             
 9. Testing
 
