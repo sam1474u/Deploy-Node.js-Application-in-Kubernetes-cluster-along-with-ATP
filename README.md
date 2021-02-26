@@ -410,52 +410,9 @@ We will use oracledb node.js package and oracle instant client for connecting to
 
             kubectl expose deployment db-app --port=80 --target-port=8080 --type=LoadBalancer 
             
-      ![image](https://user-images.githubusercontent.com/42166489/109262406-7eb85780-7827-11eb-99dc-edc38a625186.png)
+    ![image](https://user-images.githubusercontent.com/42166489/109262406-7eb85780-7827-11eb-99dc-edc38a625186.png)
             
 9. Testing
 
-
-
-
+    ![image](https://user-images.githubusercontent.com/42166489/109263938-2d5d9780-782a-11eb-94dd-0c3d281ba2b6.png)       
        
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-      
-      
-      
-      
-      
-      
-      
-      
-         
-         
-         
-         
-         
-         
-         
-            
-            
-            
-            
-     
-            
-            
-            
