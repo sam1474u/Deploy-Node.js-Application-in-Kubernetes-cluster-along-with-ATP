@@ -61,8 +61,7 @@ We will use oracledb node.js package and oracle instant client for connecting to
               --set storage.etcd.useEmbedded=true \
               --set tls.enabled=false
               
-          // insert image here.
-            
+                     
     5. RBAC Permissions for registering OCI Service Broker
 
            kubectl create clusterrolebinding cluster-admin-brokers --clusterrole=cluster-admin --user=<USER_ID>
@@ -82,7 +81,7 @@ We will use oracledb node.js package and oracle instant client for connecting to
          
          Get Services List
          
-                svcat get classes
+                ./svcat get classes
                 
           ![image](https://user-images.githubusercontent.com/42166489/109262149-0356a600-7827-11eb-85e8-e7b7221c26b9.png)
           
